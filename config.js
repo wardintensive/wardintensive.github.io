@@ -12,7 +12,7 @@ window.WARD_CONFIG = {
   hospitalName: "Ward Intensive",
   portalTitle: "Portal Informasi Rawat Inap",
   portalSubtitle: "Portal terintegrasi untuk akses SPO, dokumen akreditasi, formulir, dashboard, dan administrasi pelayanan rawat inap.",
-  appScriptWebAppUrl: "https://script.google.com/macros/s/AKfycbxxxxxxxxxxxxxxxxxxxx/exec"
+  appScriptWebAppUrl: https://script.google.com/macros/s/AKfycbyFyxBJXvffelASke-7yfaC7Nhw9KMYQJbNS7s2wsCFUiqHWlUIeolsHiyAQlsZ98H7/exec
   googleSitesUrl: "https://sites.google.com/view/wardintensive/beranda",
   googleDriveUrl: "", // isi link folder Google Drive internal, bila ada
   quickLinks: [
