@@ -7,7 +7,7 @@ window.SITE_CONFIG = {
   hospitalName: "Ward Intensive",
   portalTitle: "Portal Kendali Rawat Inap",
   portalSubtitle: "Pusat akses internal untuk dashboard bed, dokumen pelayanan, alur admisi, dan koordinasi ruang rawat inap.",
-  appScriptWebAppUrl: "ISI_URL_WEB_APP_APPS_SCRIPT_ANDA",
+  appScriptWebAppUrl: https://script.google.com/macros/s/AKfycbyFyxBJXvffelASke-7yfaC7Nhw9KMYQJbNS7s2wsCFUiqHWlUIeolsHiyAQlsZ98H7/exec,
   googleDriveUrl: "#",
   spoUrl: "#",
   formAdmisiUrl: "#",
