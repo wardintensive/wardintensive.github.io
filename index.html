@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ward Intensive | Portal Informasi Rawat Inap</title>
+  <meta name="description" content="Portal informasi rawat inap untuk akses SPO, dashboard, dokumen akreditasi, formulir, dan administrasi pelayanan.">
+  <link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="index.html"><span class="brand-mark">🏥</span><span data-hospital-name>Ward Intensive</span></a>
+      <nav class="nav-links" aria-label="Navigasi utama">
+        <a class="active" href="index.html">Beranda</a>
+        <a href="simrs.html">SIMRS</a>
+        <a href="team.html">Team</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-card">
+          <div class="badge-row">
+            <span class="badge">🔒 Internal RS</span>
+            <span class="badge">🛏️ Bed Management</span>
+            <span class="badge">📋 Dokumen Pelayanan</span>
+          </div>
+          <h1 id="portalTitle">Portal Informasi Rawat Inap</h1>
+          <p id="portalSubtitle">Portal terintegrasi untuk akses SPO, dokumen akreditasi, formulir, dashboard, dan administrasi pelayanan rawat inap.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="simrs.html">📊 Buka Dashboard Bed</a>
+            <a class="btn btn-secondary" href="#akses-cepat">⚡ Akses Cepat</a>
+            <a class="btn btn-secondary" id="driveLink" href="#">📁 Pengisian GDrive</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="akses-cepat" class="section">
+      <div class="container">
+        <div class="section-title">
+          <div>
+            <h2>Akses Cepat</h2>
+            <p>Akses dokumen dan aplikasi yang sering digunakan staf rawat inap.</p>
+          </div>
+        </div>
+        <div id="quickLinks" class="grid grid-3"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="panel">
+          <h2>Pusat Informasi Rawat Inap</h2>
+          <p>Gunakan daftar berikut untuk menuju informasi ruang, dashboard, atau dokumen pendukung masing-masing unit.</p>
+        </div>
+        <div id="roomLinks" class="grid grid-3" style="margin-top:16px"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© <span data-year></span> <span data-hospital-name>Ward Intensive</span>. Portal internal rawat inap.</div>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>

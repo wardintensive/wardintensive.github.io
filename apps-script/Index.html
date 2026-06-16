@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard Internal Rawat Inap</title>
+
+<style>
+:root{
+  --primary:#0f4c81;
+  --primary-2:#1976d2;
+  --accent:#f59e0b;
+  --bg:transparent;
+  --card:#ffffff;
+  --text:#172033;
+  --muted:#64748b;
+  --border:#e5e7eb;
+  --blue:#2563eb;
+  --green:#16a34a;
+  --red:#b91c1c;
+  --yellow:#b45309;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI',Arial,sans-serif;
+}
+
+html{
+  background:transparent !important;
+}
+
+body{
+  background:transparent !important;
+  color:var(--text);
+  padding:0;
+  overflow-x:hidden;
+}
+
+.header{
+  background:linear-gradient(135deg,var(--primary),var(--primary-2));
+  color:white;
+  padding:26px;
+  border-radius:22px;
+  margin-bottom:18px;
+  box-shadow:0 10px 25px rgba(15,76,129,.18);
+  position:relative;
+  overflow:hidden;
+}
+
+.header::after{
+  content:"";
+  position:absolute;
+  right:-60px;
+  top:-60px;
+  width:220px;
+  height:220px;
+  background:rgba(255,255,255,.10);
+  border-radius:50%;
+}
+
+.header-content{
+  position:relative;
+  z-index:1;
+}
+
+.header h1{
+  font-size:34px;
+  line-height:1.2;
+  margin-bottom:8px;
+  letter-spacing:.2px;
+}
+
+.header .subtitle{
+  opacity:.92;
+  font-size:15px;
+  margin-bottom:10px;
+}
+
+.update-line{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  align-items:center;
+  font-size:13px;
+  opacity:.95;
+}
+
+.pill{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:7px 10px;
+  border-radius:999px;
+  background:rgba(255,255,255,.16);
+  backdrop-filter:blur(4px);
+}
+
+.error{
+  background:#fee2e2;
+  color:#991b1b;
+  padding:14px 16px;
+  border-radius:14px;
+  margin-bottom:16px;
+  border:1px solid #fecaca;
+  display:none;
+  font-weight:600;
+}
+
+.warning{
+  background:#fff7ed;
+  color:#9a3412;
+  padding:12px 14px;
+  border-radius:14px;
+  margin-bottom:16px;
+  border:1px solid #fed7aa;
+  display:none;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(160px,1fr));
+  gap:14px;
+  margin-bottom:16px;
+}
+
+.stat-card{
+  background:rgba(255,255,255,.94);
+  padding:18px;
+  border-radius:18px;
+  box-shadow:0 4px 15px rgba(15,23,42,.07);
+  border:1px solid rgba(226,232,240,.8);
+  backdrop-filter:blur(8px);
+}
+
+.stat-title{
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:8px;
+  font-weight:600;
+}
+
+.stat-value{
+  font-size:34px;
+  font-weight:800;
+  color:var(--primary);
+  line-height:1;
+}
+
+.stat-note{
+  margin-top:6px;
+  font-size:12px;
+  color:var(--muted);
+}
+
+.toolbar{
+  display:grid;
+  grid-template-columns:1.5fr 180px 180px auto;
+  gap:10px;
+  background:rgba(255,255,255,.94);
+  padding:14px;
+  border-radius:18px;
+  box-shadow:0 4px 15px rgba(15,23,42,.06);
+  border:1px solid rgba(226,232,240,.8);
+  margin-bottom:16px;
+  align-items:center;
+}
+
+.input, .select{
+  width:100%;
+  border:1px solid var(--border);
+  background:#fff;
+  padding:11px 12px;
+  border-radius:12px;
+  font-size:14px;
+  outline:none;
+}
+
+.input:focus, .select:focus{
+  border-color:var(--primary-2);
+  box-shadow:0 0 0 3px rgba(25,118,210,.10);
+}
+
+.btn{
+  border:0;
+  padding:11px 14px;
+  border-radius:12px;
+  background:var(--primary);
+  color:white;
+  font-weight:700;
+  cursor:pointer;
+  transition:.18s;
+  white-space:nowrap;
+}
+
+.btn:hover{
+  transform:translateY(-1px);
+  box-shadow:0 8px 18px rgba(15,76,129,.20);
+}
+
+.legend-box{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  align-items:center;
+  background:rgba(255,255,255,.94);
+  padding:12px 14px;
+  border-radius:16px;
+  margin-bottom:16px;
+  box-shadow:0 4px 15px rgba(15,23,42,.05);
+  border:1px solid rgba(226,232,240,.8);
+  font-size:13px;
+  color:#334155;
+}
+
+.legend-item{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  font-weight:700;
+}
+
+.legend-dot{
+  width:13px;
+  height:13px;
+  border-radius:4px;
+  display:inline-block;
+}
+
+.legend-dot.occupied{ background:#2563eb; }
+.legend-dot.empty{ background:#16a34a; }
+.legend-dot.unavailable{ background:#ef4444; }
+.legend-dot.queue{ background:#f59e0b; }
+
+.room-summary{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin-bottom:20px;
+}
+
+.room-card{
+  background:rgba(255,255,255,.94);
+  padding:16px;
+  border-radius:18px;
+  box-shadow:0 4px 15px rgba(15,23,42,.06);
+  border:1px solid rgba(226,232,240,.8);
+  cursor:pointer;
+  transition:.18s;
+}
+
+.room-card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 20px rgba(15,23,42,.09);
+}
+
+.room-card.active-room{
+  border:3px solid var(--primary-2);
+  box-shadow:0 0 0 4px rgba(25,118,210,.10);
+}
+
+.room-card h3{
+  color:var(--primary);
+  margin-bottom:9px;
+  font-size:18px;
+}
+
+.room-grid-detail{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+  margin:10px 0;
+}
+
+.room-mini{
+  background:#f8fafc;
+  border-radius:10px;
+  padding:8px;
+  text-align:center;
+}
+
+.room-mini b{
+  display:block;
+  font-size:17px;
+  color:#0f172a;
+}
+
+.room-mini span{
+  font-size:11px;
+  color:var(--muted);
+}
+
+.progress{
+  height:10px;
+  background:#e5e7eb;
+  border-radius:20px;
+  overflow:hidden;
+  margin-top:10px;
+}
+
+.bar{
+  height:100%;
+  background:linear-gradient(90deg,#3b82f6,#1d4ed8);
+}
+
+.section-title{
+  margin:6px 0 12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.section-title h2{
+  color:var(--primary);
+  font-size:22px;
+}
+
+.antrian-box{
+  background:rgba(255,255,255,.94);
+  padding:18px;
+  border-radius:18px;
+  box-shadow:0 4px 15px rgba(15,23,42,.06);
+  border:1px solid rgba(226,232,240,.8);
+  margin-bottom:18px;
+}
+
+.antrian-title{
+  font-size:20px;
+  font-weight:800;
+  color:var(--primary);
+  margin-bottom:12px;
+}
+
+.antrian-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:12px;
+}
+
+.antrian-room{
+  padding:12px;
+  background:#fff8e1;
+  border-radius:14px;
+  border-left:5px solid var(--accent);
+}
+
+.antrian-room h4{
+  margin-bottom:8px;
+  color:var(--primary);
+}
+
+.antrian-item{
+  padding:7px 10px;
+  margin:5px 0;
+  background:white;
+  border-radius:9px;
+  border-left:4px solid var(--primary-2);
+  font-size:14px;
+  box-shadow:0 1px 4px rgba(15,23,42,.04);
+}
+
+.antrian-empty{
+  border-left-color:#22c55e;
+  color:#16a34a;
+  font-weight:700;
+}
+
+.kamar-title{
+  margin-top:18px;
+  padding:12px 16px;
+  background:linear-gradient(135deg,var(--primary),var(--primary-2));
+  color:white;
+  border-radius:14px;
+  font-size:17px;
+  font-weight:800;
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  align-items:center;
+}
+
+.bed-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(190px,1fr));
+  gap:12px;
+  margin-top:12px;
+}
+
+.bed-card{
+  background:white;
+  border-radius:14px;
+  padding:13px;
+  box-shadow:0 3px 10px rgba(15,23,42,.07);
+  transition:.18s;
+  min-height:180px;
+}
+
+.bed-card:hover{
+  transform:translateY(-2px);
+}
+
+.bed-card.occupied{
+  border-left:6px solid #2563eb;
+  background:#eff6ff;
+}
+
+.bed-card.empty{
+  border-left:6px solid #16a34a;
+  background:#f0fdf4;
+}
+
+.bed-card.unavailable{
+  border-left:6px solid #ef4444;
+  background:#fef2f2;
+}
+
+.bed-top{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  align-items:flex-start;
+  margin-bottom:8px;
+}
+
+.bed-name{
+  font-size:18px;
+  font-weight:900;
+  color:var(--primary);
+}
+
+.status-badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:6px 10px;
+  border-radius:999px;
+  font-weight:800;
+  font-size:11px;
+  white-space:nowrap;
+}
+
+.filled{
+  background:#dbeafe;
+  color:#1d4ed8;
+}
+
+.vacant{
+  background:#dcfce7;
+  color:#15803d;
+}
+
+.repair{
+  background:#fee2e2;
+  color:#b91c1c;
+}
+
+.patient-name{
+  font-size:15px;
+  font-weight:800;
+  margin-bottom:8px;
+  min-height:38px;
+  color:#111827;
+}
+
+.info{
+  font-size:12.5px;
+  margin-bottom:5px;
+  color:#475569;
+  line-height:1.35;
+  word-break:break-word;
+}
+
+.info b{
+  color:#334155;
+}
+
+.bayi-box{
+  margin-top:8px;
+  padding:8px;
+  border-radius:10px;
+  background:rgba(255,255,255,.7);
+  border:1px dashed rgba(100,116,139,.35);
+}
+
+.empty-state{
+  text-align:center;
+  background:rgba(255,255,255,.94);
+  border-radius:18px;
+  padding:30px 20px;
+  color:var(--muted);
+  box-shadow:0 4px 15px rgba(15,23,42,.05);
+  border:1px solid rgba(226,232,240,.8);
+  backdrop-filter:blur(8px);
+}
+
+.footer{
+  margin-top:24px;
+  text-align:center;
+  font-size:12px;
+  color:#64748b;
+  line-height:1.5;
+}
+
+.loading{
+  opacity:.60;
+  pointer-events:none;
+}
+
+@media(max-width:1200px){
+  .stats{ grid-template-columns:repeat(3,1fr); }
+  .room-summary{ grid-template-columns:repeat(3,1fr); }
+  .bed-grid{ grid-template-columns:repeat(3,1fr); }
+}
+
+@media(max-width:900px){
+  body{ padding:0; }
+  .toolbar{ grid-template-columns:1fr 1fr; }
+  .room-summary{ grid-template-columns:repeat(2,1fr); }
+  .bed-grid{ grid-template-columns:repeat(2,1fr); }
+}
+
+@media(max-width:600px){
+  .header h1{ font-size:26px; }
+  .stats{ grid-template-columns:1fr; }
+  .toolbar{ grid-template-columns:1fr; }
+  .room-summary{ grid-template-columns:1fr; }
+  .bed-grid{ grid-template-columns:1fr; }
+  .kamar-title{ flex-direction:column; align-items:flex-start; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <div class="header-content">
+    <h1 id="appTitle">🏥 Dashboard Internal Rawat Inap</h1>
+    <div id="appSubtitle" class="subtitle">Monitoring ketersediaan bed, penempatan pasien, BOR, dan antrian pasien</div>
+    <div class="update-line">
+      <span class="pill" id="lastUpdate">⏳ Memuat data...</span>
+      <span class="pill" id="refreshInfo">🔄 Refresh otomatis</span>
+      <span class="pill">🔒 Internal RS</span>
+    </div>
+  </div>
+</div>
+
+<div id="errorBox" class="error"></div>
+<div id="warningBox" class="warning"></div>
+
+<div class="stats" id="statsBox">
+  <div class="stat-card">
+    <div class="stat-title">Total Bed</div>
+    <div id="total" class="stat-value">0</div>
+    <div class="stat-note">Termasuk bed rusak/perbaikan</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-title">Bed Aktif</div>
+    <div id="activeTotal" class="stat-value">0</div>
+    <div class="stat-note">Total bed dikurangi rusak/perbaikan</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-title">Bed Terisi</div>
+    <div id="occupied" class="stat-value">0</div>
+    <div class="stat-note">Pasien sedang dirawat</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-title">Bed Kosong</div>
+    <div id="empty" class="stat-value">0</div>
+    <div class="stat-note">Siap ditempati</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-title">BOR Aktif</div>
+    <div id="bor" class="stat-value">0%</div>
+    <div class="stat-note">Terisi / bed aktif</div>
+  </div>
+</div>
+
+<div class="toolbar">
+  <input id="searchInput" class="input" placeholder="Cari nama pasien, kamar, bed, DPJP, atau keterangan..." oninput="renderBeds()">
+
+  <select id="statusFilter" class="select" onchange="renderBeds()">
+    <option value="ALL">Semua Status</option>
+    <option value="TERISI">Terisi</option>
+    <option value="KOSONG">Kosong</option>
+    <option value="RUSAK/PERBAIKAN">Rusak/Perbaikan</option>
+  </select>
+
+  <select id="roomFilter" class="select" onchange="changeRoomFromSelect()">
+    <option value="">Pilih Ruang</option>
+  </select>
+
+  <button class="btn" onclick="manualRefresh()">Refresh Sekarang</button>
+</div>
+
+<div class="legend-box">
+  <span class="legend-item"><span class="legend-dot occupied"></span> Terisi</span>
+  <span class="legend-item"><span class="legend-dot empty"></span> Kosong</span>
+  <span class="legend-item"><span class="legend-dot unavailable"></span> Rusak/Perbaikan</span>
+  <span class="legend-item"><span class="legend-dot queue"></span> Antrian</span>
+</div>
+
+<div class="section-title">
+  <h2>Ringkasan Ruang</h2>
+  <button class="btn" onclick="openRoom('')">Tampilkan Ringkasan Saja</button>
+</div>
+
+<div id="roomSummary" class="room-summary"></div>
+<div id="bedsContainer"></div>
+
+<div class="footer">
+  Dashboard internal admisi, IGD, ruang rawat inap, dan manajemen RS.<br>
+  Gunakan sesuai kewenangan internal. Hindari membagikan tautan dashboard kepada pihak luar.
+</div>
+
+<script>
+let DASHBOARD = null;
+let SELECTED_ROOM = "";
+let REFRESH_SECONDS = 30;
+let countdown = REFRESH_SECONDS;
+let countdownTimer = null;
+let refreshTimer = null;
+
+function init(){
+  if(typeof google === "undefined" || !google.script || !google.script.run){
+    showError({message:"Halaman ini harus dibuka melalui Web App Google Apps Script."});
+    return;
+  }
+  loadConfig();
+  loadData();
+}
+
+function loadConfig(){
+  google.script.run
+    .withSuccessHandler(function(config){
+      if(!config) return;
+      document.getElementById("appTitle").innerText = "🏥 " + (config.title || "Dashboard Internal Rawat Inap");
+      document.getElementById("appSubtitle").innerText = config.subtitle || "Monitoring bed rawat inap";
+      REFRESH_SECONDS = Number(config.refreshSeconds || 30);
+      startTimers();
+    })
+    .withFailureHandler(function(){
+      startTimers();
+    })
+    .getAppConfig();
+}
+
+function startTimers(){
+  if(refreshTimer) clearInterval(refreshTimer);
+  if(countdownTimer) clearInterval(countdownTimer);
+
+  countdown = REFRESH_SECONDS;
+  updateRefreshInfo();
+
+  refreshTimer = setInterval(loadData, REFRESH_SECONDS * 1000);
+  countdownTimer = setInterval(function(){
+    countdown = Math.max(countdown - 1, 0);
+    updateRefreshInfo();
+    if(countdown === 0) countdown = REFRESH_SECONDS;
+  }, 1000);
+}
+
+function updateRefreshInfo(){
+  document.getElementById("refreshInfo").innerText = "🔄 Refresh otomatis " + REFRESH_SECONDS + " detik | " + countdown + " detik lagi";
+}
+
+function manualRefresh(){
+  countdown = REFRESH_SECONDS;
+  updateRefreshInfo();
+  loadData();
+}
+
+function loadData(){
+  document.body.classList.add("loading");
+  google.script.run
+    .withSuccessHandler(showDashboard)
+    .withFailureHandler(showError)
+    .getDashboardData();
+}
+
+function showError(err){
+  document.body.classList.remove("loading");
+  const box = document.getElementById("errorBox");
+  box.style.display="block";
+  box.innerHTML="ERROR: " + escapeHtml(err && err.message ? err.message : err);
+  console.error(err);
+}
+
+function showWarning(message){
+  const box = document.getElementById("warningBox");
+  if(!message){
+    box.style.display="none";
+    box.innerHTML="";
+    return;
+  }
+  box.style.display="block";
+  box.innerHTML=message;
+}
+
+function showDashboard(result){
+  document.body.classList.remove("loading");
+  document.getElementById("errorBox").style.display="none";
+
+  DASHBOARD = result || {};
+
+  document.getElementById("total").innerText = DASHBOARD.total || 0;
+  document.getElementById("activeTotal").innerText = DASHBOARD.activeTotal || 0;
+  document.getElementById("occupied").innerText = DASHBOARD.occupied || 0;
+  document.getElementById("empty").innerText = DASHBOARD.empty || 0;
+  document.getElementById("bor").innerText = (DASHBOARD.bor || 0) + "%";
+
+  document.getElementById("lastUpdate").innerText = "🕒 Update: " + (DASHBOARD.update || "-");
+
+  if(DASHBOARD.missingSheets && DASHBOARD.missingSheets.length){
+    showWarning("Sheet belum ditemukan: <b>" + DASHBOARD.missingSheets.map(escapeHtml).join(", ") + "</b>");
+  }else{
+    showWarning("");
+  }
+
+  ensureSelectedRoomStillExists();
+  renderRoomSelect(DASHBOARD.rooms || []);
+  renderRoomSummary(DASHBOARD.rooms || []);
+  renderBeds();
+}
+
+function ensureSelectedRoomStillExists(){
+  if(!SELECTED_ROOM || !DASHBOARD || !DASHBOARD.rooms) return;
+  const exists = DASHBOARD.rooms.some(r => r.room === SELECTED_ROOM);
+  if(!exists) SELECTED_ROOM = "";
+}
+
+function renderRoomSelect(rooms){
+  const select = document.getElementById("roomFilter");
+  const current = SELECTED_ROOM;
+  let html = '<option value="">Pilih Ruang</option>';
+  rooms.forEach(r=>{
+    html += `<option value="${escapeAttr(r.room)}">${escapeHtml(r.room)}</option>`;
+  });
+  select.innerHTML = html;
+  select.value = current;
+}
+
+function renderRoomSummary(rooms){
+  let html = "";
+
+  if(!rooms || rooms.length === 0){
+    document.getElementById("roomSummary").innerHTML = '<div class="empty-state">Belum ada data ruang yang terbaca.</div>';
+    return;
+  }
+
+  rooms.forEach(r=>{
+    const bor = Number(r.bor || 0);
+    html += `
+      <div class="room-card ${SELECTED_ROOM === r.room ? 'active-room' : ''}" onclick="openRoom('${escapeJs(r.room)}')">
+        <h3>🏥 ${escapeHtml(r.room)}</h3>
+        <div class="room-grid-detail">
+          <div class="room-mini"><b>${r.occupied || 0}</b><span>Terisi</span></div>
+          <div class="room-mini"><b>${r.empty || 0}</b><span>Kosong</span></div>
+          <div class="room-mini"><b>${r.unavailable || 0}</b><span>Rusak</span></div>
+        </div>
+        <div><b>${r.occupied || 0}/${r.active || r.total || 0}</b> bed aktif terisi</div>
+        <div>BOR ${escapeHtml(r.bor || "0.0")}%</div>
+        <div class="progress"><div class="bar" style="width:${Math.min(bor,100)}%"></div></div>
+      </div>
+    `;
+  });
+
+  document.getElementById("roomSummary").innerHTML = html;
+}
+
+function openRoom(room){
+  SELECTED_ROOM = room || "";
+  document.getElementById("roomFilter").value = SELECTED_ROOM;
+  renderRoomSummary(DASHBOARD.rooms || []);
+  renderBeds();
+
+  if(SELECTED_ROOM){
+    document.getElementById("bedsContainer").scrollIntoView({ behavior:"smooth", block:"start" });
+  }
+}
+
+function changeRoomFromSelect(){
+  const room = document.getElementById("roomFilter").value;
+  openRoom(room);
+}
+
+/********************************************************
+ * BAGIAN ANTRIAN
+ ********************************************************/
+
+function normKey(value){
+  return String(value || "")
+    .toUpperCase()
+    .replace(/\s+/g, "")
+    .replace(/\//g, "");
+}
+
+function getExpectedQueuesForRoom(room){
+  const r = String(room || "").toUpperCase();
+
+  if(r === "TRUNTUM") return ["TRUNTUM 1","TRUNTUM 2","TRUNTUM 3","TRUNTUM 4"];
+  if(r === "NITIK") return ["NITIK 1","NITIK 2","NITIK 3"];
+  if(r === "PARANG") return ["PARANG 1","PARANG 2","PARANG 3"];
+  if(r === "NIFAS") return ["NIFAS 1","NIFAS 2"];
+  if(r === "ICU") return ["ICU"];
+  if(r === "NICU") return ["NICU"];
+  if(r === "PICU") return ["PICU"];
+  if(r === "SIDOMUKTI") return ["SIDOMUKTI"];
+  if(r === "PERINA") return ["PERINA"];
+
+  return [room];
+}
+
+function isSameQueueRoom(actualRoom, expectedRoom){
+  const a = normKey(actualRoom);
+  const e = normKey(expectedRoom);
+
+  if(a === e) return true;
+  if((e === "NICU" || e === "PICU") && a === "NICUPICU") return true;
+  if(e.indexOf(a) === 0 && a.length > 0) return true;
+
+  return false;
+}
+
+function cleanQueueList(daftar){
+  const result = [];
+  const seen = {};
+
+  (daftar || []).forEach(item=>{
+    const text = String(item || "").trim();
+    if(!text) return;
+
+    const key = text.toUpperCase();
+    if(seen[key]) return;
+
+    seen[key] = true;
+    result.push(text);
+  });
+
+  if(result.length === 0){
+    result.push("Tidak Ada Antrian");
+  }
+
+  return result;
+}
+
+function getQueueDataForRoom(room){
+  const expectedRooms = getExpectedQueuesForRoom(room);
+  const source = DASHBOARD.antrian || [];
+  const output = [];
+
+  expectedRooms.forEach(expected=>{
+    let daftarGabungan = [];
+
+    source.forEach(item=>{
+      if(isSameQueueRoom(item.ruang, expected)){
+        daftarGabungan = daftarGabungan.concat(item.daftar || []);
+      }
+    });
+
+    output.push({
+      ruang: expected,
+      daftar: cleanQueueList(daftarGabungan)
+    });
+  });
+
+  return output;
+}
+
+function renderAntrianBlock(room){
+  const queues = getQueueDataForRoom(room);
+  if(!queues || queues.length === 0) return "";
+
+  let html = `
+    <div class="antrian-box">
+      <div class="antrian-title">📋 Antrian Pasien ${escapeHtml(room)}</div>
+      <div class="antrian-grid">
+  `;
+
+  queues.forEach(q=>{
+    html += `<div class="antrian-room"><h4>${escapeHtml(q.ruang)}</h4>`;
+
+    const daftar = cleanQueueList(q.daftar);
+
+    daftar.forEach(nama=>{
+      const emptyClass = String(nama).toUpperCase() === "TIDAK ADA ANTRIAN" ? " antrian-empty" : "";
+      html += `<div class="antrian-item${emptyClass}">${escapeHtml(nama)}</div>`;
+    });
+
+    html += `</div>`;
+  });
+
+  html += `</div></div>`;
+  return html;
+}
+
+/********************************************************
+ * BAGIAN BED
+ ********************************************************/
+
+function getBedCardClass(status){
+  if(status === "TERISI") return "occupied";
+  if(status === "RUSAK/PERBAIKAN") return "unavailable";
+  return "empty";
+}
+
+function getBadgeClass(status){
+  if(status === "TERISI") return "filled";
+  if(status === "RUSAK/PERBAIKAN") return "repair";
+  return "vacant";
+}
+
+function getDisplayPatientName(bed){
+  if(bed.status === "RUSAK/PERBAIKAN") return "Bed Rusak / Perbaikan";
+  return bed.nama || "Bed Tersedia";
+}
+
+function bedMatchesSearch(bed, search){
+  if(!search) return true;
+
+  const corpus = [
+    bed.room,
+    bed.kamar,
+    bed.bed,
+    bed.fullBed,
+    bed.nama,
+    bed.jk,
+    bed.dpjp,
+    bed.ket,
+    bed.bayi,
+    bed.jkBayi,
+    bed.dpjpBayi,
+    bed.status
+  ].join(" ").toUpperCase();
+
+  return corpus.indexOf(search.toUpperCase()) !== -1;
+}
+
+function renderBeds(){
+  if(!DASHBOARD) return;
+
+  const container = document.getElementById("bedsContainer");
+
+  if(!SELECTED_ROOM){
+    container.innerHTML = "";
+    return;
+  }
+
+  const search = document.getElementById("searchInput").value.trim();
+  const status = document.getElementById("statusFilter").value;
+
+  let beds = DASHBOARD.beds || [];
+  beds = beds.filter(b => b.room === SELECTED_ROOM);
+
+  if(status !== "ALL"){
+    beds = beds.filter(b => b.status === status);
+  }
+
+  if(search){
+    beds = beds.filter(b => bedMatchesSearch(b, search));
+  }
+
+  let html = "";
+  html += renderAntrianBlock(SELECTED_ROOM);
+
+  html += `
+    <div class="section-title">
+      <h2>Detail Bed ${escapeHtml(SELECTED_ROOM)}</h2>
+      <span class="pill" style="background:#ffffff;color:#0f4c81;border:1px solid #e5e7eb;">${beds.length} bed tampil</span>
+    </div>
+  `;
+
+  if(beds.length === 0){
+    html += `<div class="empty-state">Tidak ada bed yang sesuai dengan filter/pencarian.</div>`;
+    container.innerHTML = html;
+    return;
+  }
+
+  const grouped = {};
+  beds.forEach(b=>{
+    if(!grouped[b.kamar]) grouped[b.kamar] = [];
+    grouped[b.kamar].push(b);
+  });
+
+  Object.keys(grouped)
+    .sort((a,b)=>{
+      const na = parseInt(a,10);
+      const nb = parseInt(b,10);
+      if(!isNaN(na) && !isNaN(nb)) return na - nb;
+      return String(a).localeCompare(String(b));
+    })
+    .forEach(kamar=>{
+      const totalKamar = grouped[kamar].length;
+      const isiKamar = grouped[kamar].filter(x => x.status === "TERISI").length;
+      const kosongKamar = grouped[kamar].filter(x => x.status === "KOSONG").length;
+
+      html += `
+        <div class="kamar-title">
+          <span>🛏️ KAMAR ${escapeHtml(kamar)}</span>
+          <span>${isiKamar}/${totalKamar} Terisi · ${kosongKamar} Kosong</span>
+        </div>
+        <div class="bed-grid">
+      `;
+
+      grouped[kamar].sort((a,b)=> String(a.bed).localeCompare(String(b.bed)));
+
+      grouped[kamar].forEach(bed=>{
+        const cardClass = getBedCardClass(bed.status);
+        const badgeClass = getBadgeClass(bed.status);
+
+        html += `
+          <div class="bed-card ${cardClass}">
+            <div class="bed-top">
+              <div class="bed-name">Bed ${escapeHtml(bed.bed)}</div>
+              <span class="status-badge ${badgeClass}">${escapeHtml(bed.status || "KOSONG")}</span>
+            </div>
+
+            <div class="patient-name">${escapeHtml(getDisplayPatientName(bed))}</div>
+            <div class="info"><b>Lokasi:</b> ${escapeHtml(bed.fullBed || "-")}</div>
+            <div class="info"><b>Jenis Kelamin:</b> ${escapeHtml(bed.jk || "-")}</div>
+            <div class="info"><b>DPJP:</b> ${escapeHtml(bed.dpjp || "-")}</div>
+            <div class="info"><b>Keterangan:</b> ${escapeHtml(bed.ket || "-")}</div>
+        `;
+
+        if(bed.bayi || bed.jkBayi || bed.dpjpBayi){
+          html += `
+            <div class="bayi-box">
+              <div class="info"><b>Bayi Rawat Gabung:</b> ${escapeHtml(bed.bayi || "-")}</div>
+              <div class="info"><b>JK Bayi:</b> ${escapeHtml(bed.jkBayi || "-")}</div>
+              <div class="info"><b>DPJP Bayi:</b> ${escapeHtml(bed.dpjpBayi || "-")}</div>
+            </div>
+          `;
+        }
+
+        html += `</div>`;
+      });
+
+      html += `</div>`;
+    });
+
+  container.innerHTML = html;
+}
+
+/********************************************************
+ * UTILITAS KEAMANAN OUTPUT HTML
+ ********************************************************/
+
+function escapeHtml(value){
+  return String(value == null ? "" : value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+function escapeAttr(value){
+  return escapeHtml(value);
+}
+
+function escapeJs(value){
+  return String(value == null ? "" : value)
+    .replace(/\\/g,"\\\\")
+    .replace(/'/g,"\\'")
+    .replace(/\n/g,"\\n")
+    .replace(/\r/g,"\\r");
+}
+
+init();
+</script>
+
+</body>
+</html>
