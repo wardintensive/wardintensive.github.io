@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Team | Ward Intensive</title>
+  <meta name="description" content="Halaman tim internal Ward Intensive untuk koordinasi admisi dan rawat inap.">
   <link rel="stylesheet" href="assets/app.css">
 </head>
 <body>
@@ -12,35 +13,48 @@
       <a class="brand" href="index.html"><span class="brand-mark">🏥</span><span data-hospital-name>Ward Intensive</span></a>
       <nav class="nav-links" aria-label="Navigasi utama">
         <a href="index.html">Beranda</a>
-        <a href="simrs.html">SIMRS</a>
+        <a href="simrs.html">Dashboard Bed</a>
         <a class="active" href="team.html">Team</a>
       </nav>
+      <div class="header-action">🔒 Internal RS</div>
     </div>
   </header>
 
   <main>
     <section class="hero">
       <div class="container">
-        <div class="hero-card">
-          <div class="badge-row">
-            <span class="badge">👥 Tim Rawat Inap</span>
-            <span class="badge">🧭 Koordinasi Operasional</span>
+        <div class="hero-card" style="min-height:300px">
+          <div class="hero-content">
+            <div class="badge-row">
+              <span class="badge">👥 Tim Internal</span>
+              <span class="badge">🧭 Eskalasi Operasional</span>
+              <span class="badge">📞 Koordinasi Rawat Inap</span>
+            </div>
+            <h1>Team Ward Intensive</h1>
+            <p>Struktur peran internal untuk mendukung pengelolaan dashboard bed, admisi pasien, dan koordinasi ruang rawat inap.</p>
           </div>
-          <h1>Team Ward Intensive</h1>
-          <p>Struktur peran internal yang mendukung pengelolaan informasi rawat inap, dashboard bed, dan koordinasi pelayanan.</p>
         </div>
       </div>
     </section>
 
     <section class="section">
       <div class="container">
+        <div class="section-title">
+          <div>
+            <h2>Struktur Peran Internal</h2>
+            <p>Nama dan peran dapat diubah melalui file <strong>config.js</strong> sesuai struktur rumah sakit.</p>
+          </div>
+        </div>
         <div id="teamList" class="grid grid-2"></div>
       </div>
     </section>
   </main>
 
   <footer class="footer">
-    <div class="container">© <span data-year></span> <span data-hospital-name>Ward Intensive</span>. Team internal rawat inap.</div>
+    <div class="container footer-inner">
+      <div>© <span data-year></span> <strong data-hospital-name>Ward Intensive</strong>. Team internal rawat inap.</div>
+      <div><a href="index.html">Beranda</a> · <a href="simrs.html">Dashboard Bed</a></div>
+    </div>
   </footer>
 
   <script src="config.js"></script>

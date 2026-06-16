@@ -3,39 +3,69 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ward Intensive | Portal Informasi Rawat Inap</title>
-  <meta name="description" content="Portal informasi rawat inap untuk akses SPO, dashboard, dokumen akreditasi, formulir, dan administrasi pelayanan.">
+  <title>Ward Intensive | Portal Kendali Rawat Inap</title>
+  <meta name="description" content="Portal internal rawat inap untuk dashboard bed, koordinasi admisi, dokumen pelayanan, dan informasi ruang rawat inap.">
   <link rel="stylesheet" href="assets/app.css">
 </head>
 <body>
   <header class="site-header">
     <div class="container nav">
-      <a class="brand" href="index.html"><span class="brand-mark">🏥</span><span data-hospital-name>Ward Intensive</span></a>
+      <a class="brand" href="index.html" aria-label="Beranda Ward Intensive">
+        <span class="brand-mark">🏥</span>
+        <span data-hospital-name>Ward Intensive</span>
+      </a>
       <nav class="nav-links" aria-label="Navigasi utama">
         <a class="active" href="index.html">Beranda</a>
-        <a href="simrs.html">SIMRS</a>
+        <a href="simrs.html">Dashboard Bed</a>
+        <a href="#akses-cepat">Akses Cepat</a>
         <a href="team.html">Team</a>
       </nav>
+      <div class="header-action">🔒 Internal RS</div>
     </div>
   </header>
 
   <main>
     <section class="hero">
-      <div class="container">
+      <div class="container hero-shell">
         <div class="hero-card">
-          <div class="badge-row">
-            <span class="badge">🔒 Internal RS</span>
-            <span class="badge">🛏️ Bed Management</span>
-            <span class="badge">📋 Dokumen Pelayanan</span>
-          </div>
-          <h1 id="portalTitle">Portal Informasi Rawat Inap</h1>
-          <p id="portalSubtitle">Portal terintegrasi untuk akses SPO, dokumen akreditasi, formulir, dashboard, dan administrasi pelayanan rawat inap.</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="simrs.html">📊 Buka Dashboard Bed</a>
-            <a class="btn btn-secondary" href="#akses-cepat">⚡ Akses Cepat</a>
-            <a class="btn btn-secondary" id="driveLink" href="#">📁 Pengisian GDrive</a>
+          <div class="hero-content">
+            <div class="badge-row">
+              <span class="badge">🛏️ Bed Management</span>
+              <span class="badge">📊 Dashboard BOR</span>
+              <span class="badge">⚡ Koordinasi Admisi</span>
+            </div>
+            <h1 id="portalTitle">Portal Kendali Rawat Inap</h1>
+            <p id="portalSubtitle">Pusat akses internal untuk dashboard bed, dokumen pelayanan, alur admisi, dan koordinasi ruang rawat inap.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="simrs.html">📊 Buka Dashboard Bed</a>
+              <a class="btn btn-secondary" href="#akses-cepat">⚡ Akses Cepat</a>
+              <a class="btn btn-secondary" href="team.html">👥 Lihat Team</a>
+            </div>
           </div>
         </div>
+
+        <aside class="control-panel" aria-label="Panel ringkasan portal">
+          <div class="status-card">
+            <h2>Command Center Rawat Inap</h2>
+            <p>Gunakan portal ini untuk mempercepat koordinasi admisi, pencarian dokumen, dan monitoring ruang.</p>
+            <div class="status-list">
+              <div class="status-item">
+                <div class="status-left"><span class="status-icon">📍</span><div><strong>Status Portal</strong><span>Aktif untuk akses internal</span></div></div>
+                <span class="status-pill">Online</span>
+              </div>
+              <div class="status-item">
+                <div class="status-left"><span class="status-icon">🕒</span><div><strong>Tanggal</strong><span id="todayInfo">Memuat tanggal...</span></div></div>
+              </div>
+              <div class="status-item">
+                <div class="status-left"><span class="status-icon">🔁</span><div><strong>Update Kebijakan</strong><span id="lastPolicyUpdate">-</span></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="mini-grid">
+            <div class="mini-card"><small>Fokus</small><b>Bed</b><span>Monitoring kapasitas</span></div>
+            <div class="mini-card"><small>Koordinasi</small><b>24/7</b><span>Admisi & ruangan</span></div>
+          </div>
+        </aside>
       </div>
     </section>
 
@@ -43,9 +73,12 @@
       <div class="container">
         <div class="section-title">
           <div>
-            <h2>Akses Cepat</h2>
-            <p>Akses dokumen dan aplikasi yang sering digunakan staf rawat inap.</p>
+            <h2>Akses Cepat Operasional</h2>
+            <p>Semua tautan penting rawat inap diletakkan dalam satu tempat agar staf tidak perlu mencari manual.</p>
           </div>
+          <label class="search-box" aria-label="Cari akses atau ruang">
+            🔎 <input id="portalSearch" type="search" placeholder="Cari dashboard, SPO, ruang, admisi...">
+          </label>
         </div>
         <div id="quickLinks" class="grid grid-3"></div>
       </div>
@@ -53,9 +86,28 @@
 
     <section class="section">
       <div class="container">
+        <div class="section-title">
+          <div>
+            <h2>Alur Kendali Bed Pasien</h2>
+            <p>Ringkasan alur kerja agar admisi, IGD, poliklinik, dan ruang rawat inap memiliki pemahaman yang sama.</p>
+          </div>
+        </div>
+        <div class="flow-grid">
+          <div class="flow-card"><div class="flow-no">1</div><h3>Indikasi Rawat</h3><p>Dokter dari IGD/poliklinik menetapkan kebutuhan rawat inap.</p></div>
+          <div class="flow-card"><div class="flow-no">2</div><h3>Cek Kelas & Jaminan</h3><p>Admisi menyesuaikan kelas perawatan, penjamin, dan kebutuhan klinis.</p></div>
+          <div class="flow-card"><div class="flow-no">3</div><h3>Cek Bed</h3><p>Dashboard digunakan untuk melihat kamar tersedia dan antrian pasien.</p></div>
+          <div class="flow-card"><div class="flow-no">4</div><h3>Konfirmasi Ruang</h3><p>Petugas melakukan koordinasi dengan ruang tujuan sebelum pasien dipindah.</p></div>
+          <div class="flow-card"><div class="flow-no">5</div><h3>Update Data</h3><p>Data penempatan pasien diperbarui agar BOR dan ketersediaan bed akurat.</p></div>
+        </div>
+        <div class="notice"><span>⚠️</span><div><strong>Catatan keamanan data</strong>Portal GitHub berisi tautan dan informasi umum. Data pasien tetap dikelola melalui dashboard Apps Script dan akses internal yang dibatasi.</div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
         <div class="panel">
-          <h2>Pusat Informasi Rawat Inap</h2>
-          <p>Gunakan daftar berikut untuk menuju informasi ruang, dashboard, atau dokumen pendukung masing-masing unit.</p>
+          <h2>Pusat Informasi Ruang Rawat Inap</h2>
+          <p>Pilih ruang untuk menuju dashboard dan dokumen pendukung. Daftar ruang dapat disesuaikan melalui file <strong>config.js</strong>.</p>
         </div>
         <div id="roomLinks" class="grid grid-3" style="margin-top:16px"></div>
       </div>
@@ -63,7 +115,10 @@
   </main>
 
   <footer class="footer">
-    <div class="container">© <span data-year></span> <span data-hospital-name>Ward Intensive</span>. Portal internal rawat inap.</div>
+    <div class="container footer-inner">
+      <div>© <span data-year></span> <strong data-hospital-name>Ward Intensive</strong>. Portal internal rawat inap.</div>
+      <div><a href="simrs.html">Dashboard Bed</a> · <a href="team.html">Team</a></div>
+    </div>
   </footer>
 
   <script src="config.js"></script>

@@ -1,90 +1,130 @@
-const CONFIG = window.WARD_CONFIG || {};
+(function(){
+  const defaults = {
+    hospitalName: "Ward Intensive",
+    portalTitle: "Portal Kendali Rawat Inap",
+    portalSubtitle: "Pusat akses internal untuk dashboard bed, dokumen pelayanan, alur admisi, dan koordinasi ruang rawat inap.",
+    appScriptWebAppUrl: "ISI_URL_WEB_APP_APPS_SCRIPT_ANDA",
+    googleDriveUrl: "#",
+    spoUrl: "#",
+    formAdmisiUrl: "#",
+    jadwalUrl: "#",
+    kontakAdmisiUrl: "#",
+    akreditasiUrl: "#",
+    quickLinks: [],
+    rooms: [],
+    team: []
+  };
 
-function $(selector){ return document.querySelector(selector); }
-function $all(selector){ return Array.from(document.querySelectorAll(selector)); }
-function escapeHtml(value){
-  return String(value ?? "")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-}
+  const cfg = Object.assign({}, defaults, window.SITE_CONFIG || {});
+  const $ = (sel, root=document) => root.querySelector(sel);
+  const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+  const isRealUrl = value => value && value !== "#" && !String(value).includes("ISI_URL");
+  const linkFromItem = item => item.urlKey ? (cfg[item.urlKey] || "#") : (item.url || "#");
 
-function setCommonText(){
-  $all("[data-hospital-name]").forEach(el=> el.textContent = CONFIG.hospitalName || "Ward Intensive");
-  $all("[data-year]").forEach(el=> el.textContent = new Date().getFullYear());
-}
+  function initIdentity(){
+    $$('[data-hospital-name]').forEach(el => el.textContent = cfg.hospitalName || defaults.hospitalName);
+    $$('[data-year]').forEach(el => el.textContent = new Date().getFullYear());
+    const title = $('#portalTitle');
+    if(title) title.textContent = cfg.portalTitle;
+    const subtitle = $('#portalSubtitle');
+    if(subtitle) subtitle.textContent = cfg.portalSubtitle;
+    const lastPolicy = $('#lastPolicyUpdate');
+    if(lastPolicy) lastPolicy.textContent = cfg.lastPolicyUpdate || '-';
+  }
 
-function renderHome(){
-  const title = $("#portalTitle");
-  const subtitle = $("#portalSubtitle");
-  if(title) title.textContent = CONFIG.portalTitle || "Portal Informasi Rawat Inap";
-  if(subtitle) subtitle.textContent = CONFIG.portalSubtitle || "Portal terintegrasi rawat inap.";
+  function initTime(){
+    const el = $('#todayInfo');
+    if(!el) return;
+    const now = new Date();
+    el.textContent = now.toLocaleDateString('id-ID', {weekday:'long', day:'2-digit', month:'long', year:'numeric'});
+  }
 
-  const quick = $("#quickLinks");
-  if(quick){
-    quick.innerHTML = (CONFIG.quickLinks || []).map(item => `
-      <a class="quick-card" href="${escapeHtml(item.url || '#')}">
-        <div class="quick-icon">${escapeHtml(item.icon || '🔗')}</div>
+  function renderQuickLinks(){
+    const wrap = $('#quickLinks');
+    if(!wrap) return;
+    const links = cfg.quickLinks && cfg.quickLinks.length ? cfg.quickLinks : [
+      {title:'Dashboard Bed', desc:'Buka dashboard rawat inap.', icon:'📊', url:'simrs.html', cta:'Buka dashboard'},
+      {title:'Team', desc:'Lihat struktur tim internal.', icon:'👥', url:'team.html', cta:'Lihat tim'}
+    ];
+    wrap.innerHTML = links.map(item => {
+      const url = linkFromItem(item);
+      const target = /^https?:/i.test(url) ? ' target="_blank" rel="noopener"' : '';
+      return `<a class="quick-card" href="${escapeHtml(url)}"${target}>
+        <div class="quick-icon">${item.icon || '🔗'}</div>
         <h3>${escapeHtml(item.title)}</h3>
         <p>${escapeHtml(item.desc || '')}</p>
-        <span class="link">Buka akses →</span>
-      </a>
-    `).join("");
+        <span class="link">${escapeHtml(item.cta || 'Buka')} <span>→</span></span>
+      </a>`;
+    }).join('');
   }
 
-  const rooms = $("#roomLinks");
-  if(rooms){
-    rooms.innerHTML = (CONFIG.rooms || []).map(room => `
-      <a class="room-card" href="${escapeHtml(room.url || '#')}">
-        <div>
-          <h3>${escapeHtml(room.name)}</h3>
-          <p>${escapeHtml(room.desc || 'Link ke sumber')}</p>
-        </div>
-        <span class="room-chip">Link ke sumber</span>
-      </a>
-    `).join("");
-  }
-
-  const drive = $("#driveLink");
-  if(drive){
-    drive.href = CONFIG.googleDriveUrl || "#";
-    if(!CONFIG.googleDriveUrl) drive.addEventListener("click", e => e.preventDefault());
-  }
-}
-
-function renderSimrs(){
-  const holder = $("#dashboardEmbed");
-  if(!holder) return;
-
-  const url = CONFIG.appScriptWebAppUrl;
-  if(url){
-    holder.innerHTML = `<div class="iframe-wrap"><iframe src="${escapeHtml(url)}" title="Dashboard Internal Rawat Inap"></iframe></div>`;
-  }else{
-    holder.innerHTML = `
-      <div class="panel">
-        <h2>URL Apps Script belum diisi</h2>
-        <p>Isi variabel <span class="code">appScriptWebAppUrl</span> di file <span class="code">config.js</span> dengan URL Web App Apps Script dashboard internal rawat inap Anda.</p>
-        <div class="notice">Dashboard bed pasien sebaiknya tetap berjalan dari Google Apps Script agar koneksi ke Google Sheet tetap aman dan stabil.</div>
-        <div class="empty-state">Contoh: https://script.google.com/macros/s/AKfycbxxxxxxxxxxxx/exec</div>
+  function renderRooms(){
+    const wrap = $('#roomLinks');
+    if(!wrap) return;
+    const rooms = cfg.rooms || [];
+    wrap.innerHTML = rooms.map(room => `<a class="room-card" href="simrs.html">
+      <div>
+        <h3>${escapeHtml(room.name)}</h3>
+        <p>${escapeHtml(room.desc || 'Informasi ruang rawat inap')}</p>
       </div>
-    `;
+      <span class="room-chip">${escapeHtml(room.tag || 'Ruang')}</span>
+    </a>`).join('');
   }
-}
 
-function renderTeam(){
-  const team = $("#teamList");
-  if(!team) return;
-  team.innerHTML = (CONFIG.team || []).map(member => `
-    <div class="team-card">
-      <h3>${escapeHtml(member.name)}</h3>
-      <p>${escapeHtml(member.role || '')}</p>
-    </div>
-  `).join("");
-}
+  function renderTeam(){
+    const wrap = $('#teamList');
+    if(!wrap) return;
+    const team = cfg.team || [];
+    wrap.innerHTML = team.map(member => `<div class="team-card">
+      <div class="avatar">👤</div>
+      <div>
+        <h3>${escapeHtml(member.name || 'PIC Internal')}</h3>
+        <strong>${escapeHtml(member.role || 'Tim')}</strong>
+        <p>${escapeHtml(member.desc || '')}</p>
+      </div>
+    </div>`).join('');
+  }
 
-setCommonText();
-renderHome();
-renderSimrs();
-renderTeam();
+  function renderDashboard(){
+    const wrap = $('#dashboardEmbed');
+    if(!wrap) return;
+    if(isRealUrl(cfg.appScriptWebAppUrl)){
+      wrap.innerHTML = `<div class="iframe-wrap"><iframe src="${escapeHtml(cfg.appScriptWebAppUrl)}" loading="lazy" title="Dashboard Internal Rawat Inap"></iframe></div>`;
+    }else{
+      wrap.innerHTML = `<div class="placeholder">
+        <strong>Link Apps Script belum diisi.</strong><br>
+        Buka file <code>config.js</code>, lalu isi bagian <code>appScriptWebAppUrl</code> dengan URL Web App Google Apps Script yang berakhiran <code>/exec</code>.
+      </div>`;
+    }
+  }
+
+  function initSearch(){
+    const input = $('#portalSearch');
+    if(!input) return;
+    input.addEventListener('input', function(){
+      const q = this.value.trim().toLowerCase();
+      $$('.quick-card, .room-card').forEach(card => {
+        card.style.display = card.textContent.toLowerCase().includes(q) ? '' : 'none';
+      });
+    });
+  }
+
+  function escapeHtml(value){
+    return String(value || '')
+      .replace(/&/g,'&amp;')
+      .replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;')
+      .replace(/'/g,'&#039;');
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    initIdentity();
+    initTime();
+    renderQuickLinks();
+    renderRooms();
+    renderTeam();
+    renderDashboard();
+    initSearch();
+  });
+})();

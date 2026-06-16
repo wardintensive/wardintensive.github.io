@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SIMRS | Ward Intensive</title>
+  <title>Dashboard Bed | Ward Intensive</title>
+  <meta name="description" content="Halaman dashboard internal rawat inap yang menampilkan Apps Script Web App.">
   <link rel="stylesheet" href="assets/app.css">
 </head>
 <body>
@@ -12,25 +13,29 @@
       <a class="brand" href="index.html"><span class="brand-mark">🏥</span><span data-hospital-name>Ward Intensive</span></a>
       <nav class="nav-links" aria-label="Navigasi utama">
         <a href="index.html">Beranda</a>
-        <a class="active" href="simrs.html">SIMRS</a>
+        <a class="active" href="simrs.html">Dashboard Bed</a>
         <a href="team.html">Team</a>
       </nav>
+      <div class="header-action">🔒 Internal RS</div>
     </div>
   </header>
 
   <main>
     <section class="hero">
       <div class="container">
-        <div class="hero-card">
-          <div class="badge-row">
-            <span class="badge">📊 Dashboard Bed</span>
-            <span class="badge">🔄 Integrasi Google Sheet</span>
-            <span class="badge">🔒 Internal RS</span>
-          </div>
-          <h1>SIMRS & Dashboard Rawat Inap</h1>
-          <p>Halaman ini digunakan untuk menampilkan Dashboard Internal Rawat Inap dari Google Apps Script Web App.</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="index.html">← Kembali ke Beranda</a>
+        <div class="hero-card" style="min-height:300px">
+          <div class="hero-content">
+            <div class="badge-row">
+              <span class="badge">📊 Dashboard Bed</span>
+              <span class="badge">🔄 Google Apps Script</span>
+              <span class="badge">🛏️ Ketersediaan Tempat Tidur</span>
+            </div>
+            <h1>Dashboard Internal Rawat Inap</h1>
+            <p>Monitor total bed, bed aktif, bed terisi, bed kosong, BOR, keterangan ruang, dan antrian pasien melalui dashboard operasional.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="index.html">← Kembali ke Beranda</a>
+              <a class="btn btn-secondary" href="team.html">👥 Kontak Team</a>
+            </div>
           </div>
         </div>
       </div>
@@ -42,7 +47,10 @@
   </main>
 
   <footer class="footer">
-    <div class="container">© <span data-year></span> <span data-hospital-name>Ward Intensive</span>. SIMRS internal rawat inap.</div>
+    <div class="container footer-inner">
+      <div>© <span data-year></span> <strong data-hospital-name>Ward Intensive</strong>. Dashboard internal rawat inap.</div>
+      <div><a href="index.html">Beranda</a></div>
+    </div>
   </footer>
 
   <script src="config.js"></script>
