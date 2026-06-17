@@ -5,82 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Ward Intensive | Portal Kendali Rawat Inap</title>
   <meta name="description" content="Portal internal rawat inap untuk dashboard bed, koordinasi admisi, dokumen pelayanan, dan informasi ruang rawat inap.">
-  <style>
-    :root{
-      --blue:#0f5f9f;
-      --blue2:#1f86e0;
-      --navy:#063557;
-      --ink:#07375c;
-      --muted:#4c6680;
-      --soft:#eef7ff;
-      --line:#d7e6f3;
-      --card:#ffffff;
-      --shadow:0 18px 55px rgba(9,58,94,.13);
-      --radius:22px;
-    }
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{
-      min-height:100vh;
-      font-family:Inter,Segoe UI,Arial,sans-serif;
-      color:var(--ink);
-      background:
-        linear-gradient(rgba(15,95,159,.035) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(15,95,159,.035) 1px,transparent 1px),
-        linear-gradient(180deg,#f8fcff 0%,#eef7ff 100%);
-      background-size:32px 32px,32px 32px,100% 100%;
-    }
-    a{color:inherit;text-decoration:none}
-    .container{width:min(1120px,calc(100% - 36px));margin:auto}
-    .site-header{position:sticky;top:0;z-index:20;background:rgba(248,252,255,.84);backdrop-filter:blur(16px);border-bottom:1px solid rgba(215,230,243,.8)}
-    .nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:18px}
-    .brand{display:flex;align-items:center;gap:12px;font-weight:900;font-size:20px;color:var(--navy)}
-    .brand-mark{width:42px;height:42px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(135deg,#e6f4ff,#fff);box-shadow:0 10px 25px rgba(15,95,159,.14)}
-    .nav-links{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-    .nav-links a,.header-action{font-size:13px;font-weight:800;padding:10px 14px;border-radius:999px;color:#234b6a}
-    .nav-links a:hover,.nav-links a.active{background:#e6f3ff;color:#075fa3}
-    .header-action{background:#fff;border:1px solid var(--line)}
-    .hero{padding:34px 0 22px}
-    .hero-shell{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,.85fr);gap:18px;align-items:stretch}
-    .hero-card{position:relative;overflow:hidden;min-height:380px;border-radius:28px;background:linear-gradient(135deg,#0b5b99 0%,#1774c8 55%,#2d8eeb 100%);color:white;box-shadow:var(--shadow)}
-    .hero-card:before{content:"";position:absolute;right:-100px;bottom:-130px;width:360px;height:360px;border-radius:50%;background:rgba(255,255,255,.18)}
-    .hero-card:after{content:"";position:absolute;right:72px;top:-105px;width:230px;height:230px;border-radius:50%;background:rgba(255,255,255,.12)}
-    .hero-content{position:relative;z-index:1;padding:42px 38px;max-width:680px}
-    .badge-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
-    .badge{font-size:12px;font-weight:900;padding:9px 12px;border:1px solid rgba(255,255,255,.25);border-radius:999px;background:rgba(255,255,255,.14)}
-    h1{font-size:clamp(34px,5vw,58px);line-height:1.02;letter-spacing:-1.8px;margin-bottom:16px}
-    .hero p{font-size:17px;line-height:1.7;color:rgba(255,255,255,.88);max-width:610px}
-    .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 18px;border-radius:13px;font-weight:900;font-size:14px;border:1px solid rgba(255,255,255,.28)}
-    .btn-primary{background:white;color:var(--navy)}
-    .btn-secondary{background:rgba(255,255,255,.12);color:white}
-    .control-panel{display:grid;gap:14px}
-    .status-card,.mini-card,.panel,.quick-card,.room-card,.flow-card,.team-card{background:rgba(255,255,255,.88);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
-    .status-card{padding:24px}
-    .status-card h2,.section h2{font-size:24px;color:var(--navy);letter-spacing:-.7px;margin-bottom:8px}
-    .status-card p,.section-title p,.panel p,.flow-card p,.quick-card p,.room-card p,.team-card p{color:var(--muted);font-size:13px;line-height:1.65}
-    .status-list{display:grid;gap:10px;margin-top:18px}
-    .status-item{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px;border-radius:14px;background:#f7fbff;border:1px solid #e0edf8}
-    .status-left{display:flex;align-items:center;gap:10px}.status-left strong{display:block;font-size:13px}.status-left span:last-child{display:block;font-size:12px;color:var(--muted);margin-top:2px}.status-icon{width:32px;height:32px;display:grid;place-items:center;border-radius:10px;background:#e6f4ff}.status-pill{font-size:12px;font-weight:900;color:#08713a;background:#ddf8e9;padding:6px 10px;border-radius:999px}
-    .mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.mini-card{padding:18px}.mini-card small{font-weight:900;color:var(--muted);display:block}.mini-card b{font-size:28px;display:block;margin:6px 0;color:var(--navy)}.mini-card span{font-size:12px;color:var(--muted)}
-    .section{padding:18px 0}.section-title{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:14px}.section-title h2{margin-bottom:7px}
-    .search-box{display:flex;align-items:center;gap:9px;background:white;border:1px solid var(--line);border-radius:14px;padding:0 12px;min-width:310px;height:48px;box-shadow:0 10px 28px rgba(9,58,94,.06)}.search-box input{border:0;outline:0;background:transparent;width:100%;font:inherit;color:var(--ink)}
-    .grid{display:grid;gap:14px}.grid-3{grid-template-columns:repeat(3,1fr)}.grid-2{grid-template-columns:repeat(2,1fr)}
-    .quick-card{position:relative;overflow:hidden;padding:22px;min-height:176px;transition:.2s}.quick-card:after,.room-card:after{content:"";position:absolute;right:-34px;top:-34px;width:88px;height:88px;border-radius:50%;background:#eff7ff}.quick-card:hover,.room-card:hover,.flow-card:hover{transform:translateY(-3px);border-color:#9dcbef}.quick-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(135deg,#e7f5ff,#fffbe8);font-size:21px;margin-bottom:14px}.quick-card h3,.room-card h3,.flow-card h3{font-size:18px;color:var(--navy);margin-bottom:10px}.quick-card .link{display:inline-flex;margin-top:12px;font-weight:900;color:#075fa3;font-size:13px}
-    .flow-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.flow-card{padding:16px}.flow-no{width:30px;height:30px;display:grid;place-items:center;border-radius:10px;background:linear-gradient(135deg,#0b5b99,#1d84db);color:white;font-weight:900;margin-bottom:12px}.flow-card h3{font-size:15px}.flow-card p{font-size:12px}
-    .notice{display:flex;gap:12px;margin-top:14px;padding:15px 17px;border-radius:16px;background:#fff8ea;border:1px solid #ffd28c;color:#7a4300;font-size:13px;line-height:1.7}.notice strong{display:block;margin-bottom:2px}
-    .panel{padding:24px;margin-bottom:16px}.panel h2{font-size:26px;margin-bottom:8px}
-    .room-card{position:relative;overflow:hidden;display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:20px;min-height:142px;transition:.2s}.room-chip{position:relative;z-index:1;white-space:nowrap;font-size:11px;font-weight:900;padding:7px 10px;border-radius:999px;background:#eaf5ff;color:#075fa3;border:1px solid #cde6fa}
-    .team-card{display:flex;gap:14px;padding:20px}.avatar{width:46px;height:46px;border-radius:16px;background:#e6f4ff;display:grid;place-items:center;font-size:22px}.team-card h3{font-size:18px;color:var(--navy);margin-bottom:4px}.team-card strong{display:block;color:#075fa3;font-size:13px;margin-bottom:8px}
-    .footer{padding:34px 0 42px;color:var(--muted);font-size:13px}.footer-inner{display:flex;justify-content:space-between;gap:18px;border-top:1px solid var(--line);padding-top:20px}.footer a{font-weight:900;color:#075fa3}
-    @media(max-width:950px){.hero-shell,.grid-3,.grid-2,.flow-grid{grid-template-columns:1fr}.nav{height:auto;padding:14px 0;align-items:flex-start}.nav-links{display:none}.section-title{display:block}.search-box{min-width:100%;margin-top:14px}.hero-card{min-height:auto}.hero-content{padding:32px 24px}.footer-inner{display:block}.footer-inner div+div{margin-top:8px}}
-  </style>
+  <link rel="stylesheet" href="assets/app.css">
 </head>
 <body>
   <header class="site-header">
     <div class="container nav">
-      <a class="brand" href="index.html" aria-label="Beranda Ward Intensive"><span class="brand-mark">🏥</span><span>Ward Intensive</span></a>
+      <a class="brand" href="index.html" aria-label="Beranda Ward Intensive">
+        <span class="brand-mark">🏥</span>
+        <span data-hospital-name>Ward Intensive</span>
+      </a>
       <nav class="nav-links" aria-label="Navigasi utama">
-        <a class="active" href="index.html">Beranda</a><a href="simrs.html">Dashboard Bed</a><a href="#akses-cepat">Akses Cepat</a><a href="team.html">Team</a>
+        <a class="active" href="index.html">Beranda</a>
+        <a href="simrs.html">Dashboard Bed</a>
+        <a href="#akses-cepat">Akses Cepat</a>
+        <a href="team.html">Team</a>
       </nav>
       <div class="header-action">🔒 Internal RS</div>
     </div>
@@ -91,43 +29,69 @@
       <div class="container hero-shell">
         <div class="hero-card">
           <div class="hero-content">
-            <div class="badge-row"><span class="badge">🛏️ Bed Management</span><span class="badge">📊 Dashboard BOR</span><span class="badge">⚡ Koordinasi Admisi</span></div>
-            <h1>Portal Kendali Rawat Inap</h1>
-            <p>Pusat akses internal untuk dashboard bed, dokumen pelayanan, alur admisi, dan koordinasi ruang rawat inap.</p>
-            <div class="hero-actions"><a class="btn btn-primary" href="simrs.html">📊 Buka Dashboard Bed</a><a class="btn btn-secondary" href="#akses-cepat">⚡ Akses Cepat</a><a class="btn btn-secondary" href="team.html">👥 Lihat Team</a></div>
-          </div>
-        </div>
-        <aside class="control-panel" aria-label="Panel ringkasan portal">
-          <div class="status-card">
-            <h2>Command Center Rawat Inap</h2><p>Gunakan portal ini untuk mempercepat koordinasi admisi, pencarian dokumen, dan monitoring ruang.</p>
-            <div class="status-list">
-              <div class="status-item"><div class="status-left"><span class="status-icon">📍</span><div><strong>Status Portal</strong><span>Aktif untuk akses internal</span></div></div><span class="status-pill">Online</span></div>
-              <div class="status-item"><div class="status-left"><span class="status-icon">🕒</span><div><strong>Tanggal</strong><span id="todayInfo">Memuat tanggal...</span></div></div></div>
-              <div class="status-item"><div class="status-left"><span class="status-icon">🔁</span><div><strong>Update Kebijakan</strong><span>16 Juni 2026</span></div></div></div>
+            <div class="badge-row">
+              <span class="badge">🛏️ Bed Management</span>
+              <span class="badge">📊 Dashboard BOR</span>
+              <span class="badge">⚡ Koordinasi Admisi</span>
+            </div>
+            <h1 id="portalTitle">Portal Kendali Rawat Inap</h1>
+            <p id="portalSubtitle">Pusat akses internal untuk dashboard bed, dokumen pelayanan, alur admisi, dan koordinasi ruang rawat inap.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="simrs.html">📊 Buka Dashboard Bed</a>
+              <a class="btn btn-secondary" href="#akses-cepat">⚡ Akses Cepat</a>
+              <a class="btn btn-secondary" href="team.html">👥 Lihat Team</a>
             </div>
           </div>
-          <div class="mini-grid"><div class="mini-card"><small>Fokus</small><b>Bed</b><span>Monitoring kapasitas</span></div><div class="mini-card"><small>Koordinasi</small><b>24/7</b><span>Admisi & ruangan</span></div></div>
+        </div>
+
+        <aside class="control-panel" aria-label="Panel ringkasan portal">
+          <div class="status-card">
+            <h2>Command Center Rawat Inap</h2>
+            <p>Gunakan portal ini untuk mempercepat koordinasi admisi, pencarian dokumen, dan monitoring ruang.</p>
+            <div class="status-list">
+              <div class="status-item">
+                <div class="status-left"><span class="status-icon">📍</span><div><strong>Status Portal</strong><span>Aktif untuk akses internal</span></div></div>
+                <span class="status-pill">Online</span>
+              </div>
+              <div class="status-item">
+                <div class="status-left"><span class="status-icon">🕒</span><div><strong>Tanggal</strong><span id="todayInfo">Memuat tanggal...</span></div></div>
+              </div>
+              <div class="status-item">
+                <div class="status-left"><span class="status-icon">🔁</span><div><strong>Update Kebijakan</strong><span id="lastPolicyUpdate">-</span></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="mini-grid">
+            <div class="mini-card"><small>Fokus</small><b>Bed</b><span>Monitoring kapasitas</span></div>
+            <div class="mini-card"><small>Koordinasi</small><b>24/7</b><span>Admisi & ruangan</span></div>
+          </div>
         </aside>
       </div>
     </section>
 
     <section id="akses-cepat" class="section">
       <div class="container">
-        <div class="section-title"><div><h2>Akses Cepat Operasional</h2><p>Semua tautan penting rawat inap diletakkan dalam satu tempat agar staf tidak perlu mencari manual.</p></div><label class="search-box">🔎 <input id="portalSearch" type="search" placeholder="Cari dashboard, SPO, ruang, admisi..."></label></div>
-        <div class="grid grid-3 searchable-area">
-          <a class="quick-card search-item" href="simrs.html"><div class="quick-icon">📊</div><h3>Dashboard Bed</h3><p>Pantau ketersediaan bed, BOR, pasien masuk, pasien pindah, dan antrian ruang.</p><span class="link">Buka dashboard →</span></a>
-          <a class="quick-card search-item" href="#"><div class="quick-icon">📁</div><h3>Pengisian GDrive</h3><p>Akses folder pengisian data, laporan harian, dan dokumen operasional rawat inap.</p><span class="link">Buka folder →</span></a>
-          <a class="quick-card search-item" href="#"><div class="quick-icon">📋</div><h3>SPO & Alur Pelayanan</h3><p>Kumpulan SPO, alur admisi, transfer pasien, discharge planning, dan administrasi ruang.</p><span class="link">Lihat dokumen →</span></a>
-          <a class="quick-card search-item" href="#"><div class="quick-icon">📝</div><h3>Form Admisi</h3><p>Form koordinasi admisi, kebutuhan kamar, pindah ruang, rujukan internal, dan monitoring bed.</p><span class="link">Isi form →</span></a>
-          <a class="quick-card search-item" href="#"><div class="quick-icon">🗓️</div><h3>Jadwal Petugas</h3><p>Akses jadwal jaga, pembagian tugas, PIC shift, dan informasi koordinasi unit.</p><span class="link">Lihat jadwal →</span></a>
-          <a class="quick-card search-item" href="team.html"><div class="quick-icon">👥</div><h3>Tim & Kontak Internal</h3><p>Daftar peran tim, kontak internal, PIC admisi, ruangan, dan eskalasi operasional.</p><span class="link">Lihat tim →</span></a>
+        <div class="section-title">
+          <div>
+            <h2>Akses Cepat Operasional</h2>
+            <p>Semua tautan penting rawat inap diletakkan dalam satu tempat agar staf tidak perlu mencari manual.</p>
+          </div>
+          <label class="search-box" aria-label="Cari akses atau ruang">
+            🔎 <input id="portalSearch" type="search" placeholder="Cari dashboard, SPO, ruang, admisi...">
+          </label>
         </div>
+        <div id="quickLinks" class="grid grid-3"></div>
       </div>
     </section>
 
     <section class="section">
       <div class="container">
-        <div class="section-title"><div><h2>Alur Kendali Bed Pasien</h2><p>Ringkasan alur kerja agar admisi, IGD, poliklinik, dan ruang rawat inap memiliki pemahaman yang sama.</p></div></div>
+        <div class="section-title">
+          <div>
+            <h2>Alur Kendali Bed Pasien</h2>
+            <p>Ringkasan alur kerja agar admisi, IGD, poliklinik, dan ruang rawat inap memiliki pemahaman yang sama.</p>
+          </div>
+        </div>
         <div class="flow-grid">
           <div class="flow-card"><div class="flow-no">1</div><h3>Indikasi Rawat</h3><p>Dokter dari IGD/poliklinik menetapkan kebutuhan rawat inap.</p></div>
           <div class="flow-card"><div class="flow-no">2</div><h3>Cek Kelas & Jaminan</h3><p>Admisi menyesuaikan kelas perawatan, penjamin, dan kebutuhan klinis.</p></div>
@@ -141,36 +105,23 @@
 
     <section class="section">
       <div class="container">
-        <div class="panel"><h2>Pusat Informasi Ruang Rawat Inap</h2><p>Pilih ruang untuk menuju dashboard dan dokumen pendukung masing-masing unit. Daftar ini dibuat langsung di HTML sehingga tetap muncul meskipun <strong>config.js</strong> belum terbaca.</p></div>
-        <div class="grid grid-3 searchable-area" id="roomLinks">
-          <a class="room-card search-item" href="simrs.html"><div><h3>TRUNTUM</h3><p>Ruang rawat inap dewasa / kelas sesuai pengaturan RS.</p></div><span class="room-chip">Rawat Inap</span></a>
-          <a class="room-card search-item" href="simrs.html"><div><h3>PARANG</h3><p>Monitoring keterisian kamar dan penempatan pasien.</p></div><span class="room-chip">Rawat Inap</span></a>
-          <a class="room-card search-item" href="simrs.html"><div><h3>SIDOMUKTI</h3><p>Ruang rawat inap dengan pemantauan bed harian.</p></div><span class="room-chip">Rawat Inap</span></a>
-          <a class="room-card search-item" href="simrs.html"><div><h3>NITIK</h3><p>Ketersediaan kamar dan koordinasi admisi ruang.</p></div><span class="room-chip">Rawat Inap</span></a>
-          <a class="room-card search-item" href="simrs.html"><div><h3>NIFAS / PAMILUTO</h3><p>Ruang ibu, bayi rawat gabung, dan monitoring bed nifas.</p></div><span class="room-chip">Ibu & Bayi</span></a>
-          <a class="room-card search-item" href="simrs.html"><div><h3>PERINA</h3><p>Monitoring kebutuhan bed perinatologi dan koordinasi neonatal.</p></div><span class="room-chip">Perina</span></a>
-          <a class="room-card search-item" href="simrs.html"><div><h3>ICU</h3><p>Unit intensif dengan prioritas koordinasi admisi kritis.</p></div><span class="room-chip">Intensif</span></a>
-          <a class="room-card search-item" href="simrs.html"><div><h3>NICU</h3><p>Unit intensif neonatal untuk monitoring kebutuhan bed bayi.</p></div><span class="room-chip">Intensif</span></a>
-          <a class="room-card search-item" href="simrs.html"><div><h3>PICU</h3><p>Unit intensif anak untuk koordinasi penempatan pasien.</p></div><span class="room-chip">Intensif</span></a>
+        <div class="panel">
+          <h2>Pusat Informasi Ruang Rawat Inap</h2>
+          <p>Pilih ruang untuk menuju dashboard dan dokumen pendukung. Daftar ruang dapat disesuaikan melalui file <strong>config.js</strong>.</p>
         </div>
+        <div id="roomLinks" class="grid grid-3" style="margin-top:16px"></div>
       </div>
     </section>
   </main>
 
-  <footer class="footer"><div class="container footer-inner"><div>© <span id="yearNow"></span> <strong>Ward Intensive</strong>. Portal internal rawat inap.</div><div><a href="simrs.html">Dashboard Bed</a> · <a href="team.html">Team</a></div></div></footer>
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>© <span data-year></span> <strong data-hospital-name>Ward Intensive</strong>. Portal internal rawat inap.</div>
+      <div><a href="simrs.html">Dashboard Bed</a> · <a href="team.html">Team</a></div>
+    </div>
+  </footer>
 
-  <script>
-    document.getElementById('yearNow').textContent = new Date().getFullYear();
-    document.getElementById('todayInfo').textContent = new Date().toLocaleDateString('id-ID',{weekday:'long',day:'2-digit',month:'long',year:'numeric'});
-    const search = document.getElementById('portalSearch');
-    if(search){
-      search.addEventListener('input', function(){
-        const q = this.value.trim().toLowerCase();
-        document.querySelectorAll('.search-item').forEach(card => {
-          card.style.display = card.textContent.toLowerCase().includes(q) ? '' : 'none';
-        });
-      });
-    }
-  </script>
+  <script src="config.js"></script>
+  <script src="assets/app.js"></script>
 </body>
 </html>
