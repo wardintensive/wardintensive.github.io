@@ -2,58 +2,242 @@
 <html lang="id">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dashboard Bed | Ward Intensive</title>
-  <meta name="description" content="Halaman dashboard internal rawat inap yang menampilkan Apps Script Web App.">
-  <link rel="stylesheet" href="assets/app.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Dashboard Internal Rawat Inap | Ward Intensive</title>
+  <meta name="description" content="Dashboard internal rawat inap fullscreen.">
+  <style>
+    :root{
+      --navy:#073b5e;
+      --blue:#0b73d9;
+      --line:#dbe7ef;
+      --text:#102033;
+      --muted:#5b7087;
+      --bg:#eef6fb;
+      --shadow:0 18px 45px rgba(6,42,75,.18);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{width:100%;height:100%;overflow:hidden}
+    body{
+      font-family:Inter,"Segoe UI",Roboto,Arial,sans-serif;
+      color:var(--text);
+      background:var(--bg);
+    }
+    .fullscreen-shell{
+      width:100vw;
+      height:100dvh;
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
+      background:linear-gradient(135deg,#eef7f6,#f8fbff 48%,#eff7ff);
+    }
+    .topbar{
+      flex:0 0 auto;
+      min-height:64px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding:10px 16px;
+      background:rgba(255,255,255,.88);
+      border-bottom:1px solid var(--line);
+      backdrop-filter:blur(16px);
+      z-index:5;
+      box-shadow:0 8px 24px rgba(6,42,75,.08);
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+    .brand-mark{
+      width:42px;
+      height:42px;
+      display:grid;
+      place-items:center;
+      border-radius:14px;
+      color:#fff;
+      background:linear-gradient(135deg,var(--navy),var(--blue));
+      box-shadow:0 12px 26px rgba(11,104,183,.22);
+      flex:0 0 auto;
+    }
+    .brand-title{
+      min-width:0;
+    }
+    .brand-title strong{
+      display:block;
+      font-size:18px;
+      color:var(--navy);
+      letter-spacing:-.02em;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .brand-title span{
+      display:block;
+      font-size:12px;
+      color:var(--muted);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .actions{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .btn{
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--navy);
+      min-height:40px;
+      padding:9px 12px;
+      border-radius:12px;
+      font-weight:800;
+      font-size:13px;
+      text-decoration:none;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:7px;
+      box-shadow:0 7px 18px rgba(6,42,75,.06);
+    }
+    .btn-primary{
+      background:linear-gradient(135deg,var(--navy),var(--blue));
+      color:#fff;
+      border-color:transparent;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .dashboard-frame{
+      flex:1 1 auto;
+      width:100%;
+      min-height:0;
+      background:#fff;
+      position:relative;
+      overflow:hidden;
+    }
+    iframe{
+      width:100%;
+      height:100%;
+      border:0;
+      display:block;
+      background:#fff;
+    }
+    .placeholder{
+      height:100%;
+      display:grid;
+      place-items:center;
+      padding:24px;
+      text-align:center;
+      background:#fff;
+    }
+    .placeholder-card{
+      max-width:720px;
+      padding:28px;
+      border-radius:22px;
+      border:1px solid #ffe1a8;
+      background:#fff8e8;
+      color:#754600;
+      box-shadow:var(--shadow);
+    }
+    .placeholder-card h1{
+      color:var(--navy);
+      margin-bottom:8px;
+      font-size:25px;
+    }
+    .placeholder-card code{
+      display:inline-block;
+      margin-top:10px;
+      padding:5px 7px;
+      border-radius:8px;
+      background:#fff;
+      font-weight:800;
+    }
+    @media(max-width:760px){
+      .topbar{align-items:flex-start;flex-direction:column;min-height:auto;padding:12px}
+      .actions{width:100%;justify-content:stretch}
+      .btn{flex:1 1 auto}
+      .brand-title strong{font-size:16px}
+      .brand-title span{font-size:11px}
+    }
+    @media(max-width:420px){
+      .brand-title span{display:none}
+      .btn{font-size:12px;padding:8px 10px}
+    }
+  </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container nav">
-      <a class="brand" href="index.html"><span class="brand-mark">🏥</span><span data-hospital-name>Ward Intensive</span></a>
-      <nav class="nav-links" aria-label="Navigasi utama">
-        <a href="index.html">Beranda</a>
-        <a class="active" href="simrs.html">Dashboard Bed</a>
-        <a href="team.html">Team</a>
-      </nav>
-      <div class="header-action">🔒 Internal RS</div>
-    </div>
-  </header>
-
-  <main>
-    <section class="hero">
-      <div class="container">
-        <div class="hero-card" style="min-height:300px">
-          <div class="hero-content">
-            <div class="badge-row">
-              <span class="badge">📊 Dashboard Bed</span>
-              <span class="badge">🔄 Google Apps Script</span>
-              <span class="badge">🛏️ Ketersediaan Tempat Tidur</span>
-            </div>
-            <h1>Dashboard Internal Rawat Inap</h1>
-            <p>Monitor total bed, bed aktif, bed terisi, bed kosong, BOR, keterangan ruang, dan antrian pasien melalui dashboard operasional.</p>
-            <div class="hero-actions">
-              <a class="btn btn-primary" href="index.html">← Kembali ke Beranda</a>
-              <a class="btn btn-secondary" href="team.html">👥 Kontak Team</a>
-            </div>
-          </div>
+  <div class="fullscreen-shell" id="fullscreenShell">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-mark">🏥</div>
+        <div class="brand-title">
+          <strong>Dashboard Internal Rawat Inap</strong>
+          <span>Monitoring bed, BOR, penempatan pasien, dan antrian ruang</span>
         </div>
       </div>
-    </section>
-
-    <section class="section">
-      <div class="container" id="dashboardEmbed"></div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="container footer-inner">
-      <div>© <span data-year></span> <strong data-hospital-name>Ward Intensive</strong>. Dashboard internal rawat inap.</div>
-      <div><a href="index.html">Beranda</a></div>
+      <div class="actions">
+        <a class="btn" href="index.html">← Beranda</a>
+        <a class="btn" id="openNewTab" href="#" target="_blank" rel="noopener">↗ Buka Tab Baru</a>
+        <button class="btn btn-primary" type="button" id="fullscreenBtn">⛶ Fullscreen</button>
+      </div>
     </div>
-  </footer>
+
+    <main class="dashboard-frame" id="dashboardFrame"></main>
+  </div>
 
   <script src="config.js"></script>
-  <script src="assets/app.js"></script>
+  <script>
+    (function(){
+      const cfg = window.SITE_CONFIG || {};
+      const url = cfg.appScriptWebAppUrl;
+      const frame = document.getElementById('dashboardFrame');
+      const openNewTab = document.getElementById('openNewTab');
+      const fullscreenBtn = document.getElementById('fullscreenBtn');
+      const fullscreenShell = document.getElementById('fullscreenShell');
+
+      function isRealUrl(value){
+        return value && value !== '#' && !String(value).includes('ISI_URL') && /^https?:\/\//i.test(String(value));
+      }
+
+      if(isRealUrl(url)){
+        frame.innerHTML = '<iframe src="' + escapeHtml(url) + '" title="Dashboard Internal Rawat Inap" allowfullscreen></iframe>';
+        openNewTab.href = url;
+      }else{
+        openNewTab.style.display = 'none';
+        frame.innerHTML = '<div class="placeholder"><div class="placeholder-card"><h1>Link Apps Script belum diisi</h1><p>Buka file <strong>config.js</strong>, lalu isi <code>appScriptWebAppUrl</code> dengan URL Web App Apps Script yang berakhiran <code>/exec</code>.</p></div></div>';
+      }
+
+      fullscreenBtn.addEventListener('click', async function(){
+        try{
+          if(!document.fullscreenElement){
+            await fullscreenShell.requestFullscreen();
+            fullscreenBtn.textContent = '↙ Keluar Fullscreen';
+          }else{
+            await document.exitFullscreen();
+            fullscreenBtn.textContent = '⛶ Fullscreen';
+          }
+        }catch(e){
+          alert('Mode fullscreen tidak bisa diaktifkan otomatis. Tekan F11 pada keyboard, atau buka dashboard di tab baru.');
+        }
+      });
+
+      document.addEventListener('fullscreenchange', function(){
+        fullscreenBtn.textContent = document.fullscreenElement ? '↙ Keluar Fullscreen' : '⛶ Fullscreen';
+      });
+
+      function escapeHtml(value){
+        return String(value || '')
+          .replace(/&/g,'&amp;')
+          .replace(/</g,'&lt;')
+          .replace(/>/g,'&gt;')
+          .replace(/"/g,'&quot;')
+          .replace(/'/g,'&#039;');
+      }
+    })();
+  </script>
 </body>
 </html>
