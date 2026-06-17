@@ -23,13 +23,13 @@ window.SITE_CONFIG = {
       url: "simrs.html",
       cta: "Buka dashboard"
     },
-    {
-      title: "Pengisian GDrive",
-      desc: "Akses folder pengisian data, laporan harian, dan dokumen operasional rawat inap.",
-      icon: "📁",
-      urlKey: "googleDriveUrl",
-      cta: "Buka folder"
-    },
+ {
+  title: "Update Bed",
+  desc: "Isi dan ubah status bed pasien secara langsung: terisi, kosong, rusak/perbaikan, DPJP, keterangan, dan data rawat gabung.",
+  icon: "🛏️",
+  url: "simrs.html?action=updateBed",
+  cta: "Isi update bed"
+},
     {
       title: "SPO & Alur Pelayanan",
       desc: "Kumpulan SPO, alur admisi, transfer pasien, discharge planning, dan administrasi ruang.",
