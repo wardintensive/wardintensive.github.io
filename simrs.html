@@ -189,55 +189,70 @@
     <main class="dashboard-frame" id="dashboardFrame"></main>
   </div>
 
-  <script src="config.js"></script>
-  <script>
-    (function(){
-      const cfg = window.SITE_CONFIG || {};
-      const url = cfg.appScriptWebAppUrl;
-      const frame = document.getElementById('dashboardFrame');
-      const openNewTab = document.getElementById('openNewTab');
-      const fullscreenBtn = document.getElementById('fullscreenBtn');
-      const fullscreenShell = document.getElementById('fullscreenShell');
+ <script src="config.js"></script>
+<script>
+  (function(){
+    const cfg = window.SITE_CONFIG || {};
+    const baseUrl = cfg.appScriptWebAppUrl;
+    const frame = document.getElementById('dashboardFrame');
+    const openNewTab = document.getElementById('openNewTab');
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    const fullscreenShell = document.getElementById('fullscreenShell');
 
-      function isRealUrl(value){
-        return value && value !== '#' && !String(value).includes('ISI_URL') && /^https?:\/\//i.test(String(value));
-      }
+    function isRealUrl(value){
+      return value && value !== '#' && !String(value).includes('ISI_URL') && /^https?:\/\//i.test(String(value));
+    }
 
-      if(isRealUrl(url)){
-        frame.innerHTML = '<iframe src="' + escapeHtml(url) + '" title="Dashboard Internal Rawat Inap" allowfullscreen></iframe>';
-        openNewTab.href = url;
-      }else{
-        openNewTab.style.display = 'none';
-        frame.innerHTML = '<div class="placeholder"><div class="placeholder-card"><h1>Link Apps Script belum diisi</h1><p>Buka file <strong>config.js</strong>, lalu isi <code>appScriptWebAppUrl</code> dengan URL Web App Apps Script yang berakhiran <code>/exec</code>.</p></div></div>';
-      }
+    function buildAppScriptUrl(){
+      if(!isRealUrl(baseUrl)) return "";
 
-      fullscreenBtn.addEventListener('click', async function(){
-        try{
-          if(!document.fullscreenElement){
-            await fullscreenShell.requestFullscreen();
-            fullscreenBtn.textContent = '↙ Keluar Fullscreen';
-          }else{
-            await document.exitFullscreen();
-            fullscreenBtn.textContent = '⛶ Fullscreen';
-          }
-        }catch(e){
-          alert('Mode fullscreen tidak bisa diaktifkan otomatis. Tekan F11 pada keyboard, atau buka dashboard di tab baru.');
+      const currentParams = new URLSearchParams(window.location.search);
+      const targetUrl = new URL(baseUrl);
+
+      currentParams.forEach(function(value, key){
+        targetUrl.searchParams.set(key, value);
+      });
+
+      return targetUrl.toString();
+    }
+
+    const finalUrl = buildAppScriptUrl();
+
+    if(isRealUrl(finalUrl)){
+      frame.innerHTML = '<iframe src="' + escapeHtml(finalUrl) + '" title="Dashboard Internal Rawat Inap" allowfullscreen></iframe>';
+      openNewTab.href = finalUrl;
+    }else{
+      openNewTab.style.display = 'none';
+      frame.innerHTML = '<div class="placeholder"><div class="placeholder-card"><h1>Link Apps Script belum diisi</h1><p>Buka file <strong>config.js</strong>, lalu isi <code>appScriptWebAppUrl</code> dengan URL Web App Apps Script yang berakhiran <code>/exec</code>.</p></div></div>';
+    }
+
+    fullscreenBtn.addEventListener('click', async function(){
+      try{
+        if(!document.fullscreenElement){
+          await fullscreenShell.requestFullscreen();
+          fullscreenBtn.textContent = '↙ Keluar Fullscreen';
+        }else{
+          await document.exitFullscreen();
+          fullscreenBtn.textContent = '⛶ Fullscreen';
         }
-      });
-
-      document.addEventListener('fullscreenchange', function(){
-        fullscreenBtn.textContent = document.fullscreenElement ? '↙ Keluar Fullscreen' : '⛶ Fullscreen';
-      });
-
-      function escapeHtml(value){
-        return String(value || '')
-          .replace(/&/g,'&amp;')
-          .replace(/</g,'&lt;')
-          .replace(/>/g,'&gt;')
-          .replace(/"/g,'&quot;')
-          .replace(/'/g,'&#039;');
+      }catch(e){
+        alert('Mode fullscreen tidak bisa diaktifkan otomatis. Tekan F11 pada keyboard, atau buka dashboard di tab baru.');
       }
-    })();
-  </script>
+    });
+
+    document.addEventListener('fullscreenchange', function(){
+      fullscreenBtn.textContent = document.fullscreenElement ? '↙ Keluar Fullscreen' : '⛶ Fullscreen';
+    });
+
+    function escapeHtml(value){
+      return String(value || '')
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;')
+        .replace(/'/g,'&#039;');
+    }
+  })();
+</script>
 </body>
 </html>
