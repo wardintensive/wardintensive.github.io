@@ -1,6 +1,3 @@
-/* auth.js - Proteksi sederhana untuk GitHub Pages Ward Intensive
-   Catatan: ini cocok untuk prototype/demo. Untuk proteksi produksi, gunakan backend/auth gateway.
-*/
 (function () {
   const LOGIN_PAGE = "login.html";
   const SESSION_KEY = "ward_intensive_auth";
