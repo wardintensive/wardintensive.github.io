@@ -38,7 +38,7 @@
     .nav-links{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
     .nav-links a,.header-action{font-size:13px;font-weight:800;padding:10px 14px;border-radius:999px;color:#234b6a}
     .nav-links a:hover,.nav-links a.active{background:#e6f3ff;color:#075fa3}
-    .header-action{background:#fff;border:1px solid var(--line)}
+    .header-action{background:#fff;border:1px solid var(--line);cursor:pointer;font-family:inherit}
     .hero{padding:34px 0 22px}
     .hero-shell{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,.85fr);gap:18px;align-items:stretch}
     .hero-card{position:relative;overflow:hidden;min-height:380px;border-radius:28px;background:linear-gradient(135deg,#0b5b99 0%,#1774c8 55%,#2d8eeb 100%);color:white;box-shadow:var(--shadow)}
@@ -74,6 +74,7 @@
     .footer{padding:34px 0 42px;color:var(--muted);font-size:13px}.footer-inner{display:flex;justify-content:space-between;gap:18px;border-top:1px solid var(--line);padding-top:20px}.footer a{font-weight:900;color:#075fa3}
     @media(max-width:950px){.hero-shell,.grid-3,.grid-2,.flow-grid{grid-template-columns:1fr}.nav{height:auto;padding:14px 0;align-items:flex-start}.nav-links{display:none}.section-title{display:block}.search-box{min-width:100%;margin-top:14px}.hero-card{min-height:auto}.hero-content{padding:32px 24px}.footer-inner{display:block}.footer-inner div+div{margin-top:8px}}
   </style>
+  <script src="auth.js"></script>
 </head>
 <body>
   <header class="site-header">
@@ -82,7 +83,7 @@
       <nav class="nav-links" aria-label="Navigasi utama">
         <a class="active" href="index.html">Beranda</a><a href="simrs.html">Dashboard Bed</a><a href="#akses-cepat">Akses Cepat</a><a href="team.html">Team</a>
       </nav>
-      <div class="header-action">🔒 Internal RS</div>
+      <button class="header-action" type="button" onclick="logoutWard()">🔒 Logout</button>
     </div>
   </header>
 
@@ -124,7 +125,7 @@
 </a>
           <a class="quick-card search-item" href="#"><div class="quick-icon">📋</div><h3>SPO & Alur Pelayanan</h3><p>Kumpulan SPO, alur admisi, transfer pasien, discharge planning, dan administrasi ruang.</p><span class="link">Lihat dokumen →</span></a>
           <a class="quick-card search-item" href="#"><div class="quick-icon">📝</div><h3>Form Admisi</h3><p>Form koordinasi admisi, kebutuhan kamar, pindah ruang, rujukan internal, dan monitoring bed.</p><span class="link">Isi form →</span></a>
-          <a class="quick-card search-item" href="https://muturssa.github.io/index.html" target="_blank" rel="noopener noreferrer">
+          <a class="quick-card search-item" href="https://muturssa.github.io/login.html" target="_blank" rel="noopener noreferrer">
             <div class="quick-icon">📊</div>
             <h3>Dashboard Mutu</h3>
             <p>Akses Dashboard Komite Mutu Rumah Sakit untuk melihat indikator mutu, laporan mutu, monitoring capaian, audit internal, dan tindak lanjut perbaikan pelayanan.</p>
